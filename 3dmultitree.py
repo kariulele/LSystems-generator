@@ -18,9 +18,9 @@ pattern initialisation
 '''
 
 angled=22.5
-pattern = "A"
-iteration = 4
-remplacement = {"A":"[&FL!A]<<<<<'[&FL!A]<<<<<<<'[&FL!A]", "F":"S<<<<<F", "S":"FL", "L":""}
+pattern = "FA"
+iteration = 5
+remplacement = {"A":"![B]<<<<[B]<<<<[B]<<<<B", "B":"&FFAJ"}
 '''
 pattern computation
 '''
@@ -41,7 +41,7 @@ def draw(pattern, angled):
     rhn = RU(-angle)
     rln = RH(-angle)
     run = RL(-angle)
-    ru180 = RU(math.radians(180))
+    ru180 = RL(math.radians(180))
     stack = []
     for i in pattern:
         if (i == "F"):
