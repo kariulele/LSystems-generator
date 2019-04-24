@@ -8,6 +8,7 @@ Created on Mon Apr 22 19:30:37 2019
 import numpy as np
 import math
 import bpy
+from matrix_rotation import RH, RU, RL
 
 def draw_cylinder(fr, to, r):
     dx = to[0] - fr[0]
@@ -25,48 +26,7 @@ def draw_cylinder(fr, to, r):
     bpy.context.object.rotation_euler[1] = theta 
     bpy.context.object.rotation_euler[2] = phi
 
-def RU(angle):
-    return [[math.cos(angle), math.sin(angle), 0],[-math.sin(angle), math.cos(angle), 0],[0, 0, 1]]
-
-def RL(angle):
-    return [[math.cos(angle), 0, -math.sin(angle)],[0, 1, 0],[math.sin(angle), 0, math.cos(angle)]]
-
-def RH(angle):
-    return [[1, 0, 0],[0, math.cos(angle), -math.sin(angle)],[0, math.sin(angle), math.cos(angle)]]
-
-def derivation(pattern, rempl, iteration):
-    res = pattern
-    for k in range(iteration):
-        pattern = res
-        res = ""
-        for i in pattern:
-            if (i in rempl):
-                res += rempl[i]
-            else:
-                res += i
-    return res
-
-'''
-pattern initialisation
-'''
-'''
-angled = 90
-pattern = "A"
-iteration = 3
-remplacement = {"A": "B-F+CFC+F-D&F∧D-F+&&CFC+F+B//", "B": "A&F∧CFB∧F∧D∧∧-F-D∧|F∧B|FC∧F∧A//", "C":"|D∧|F∧B-F+C∧F∧A&&FA&F∧C+F+B∧F∧D//", "D":"|CFB-F+B|FA&F∧A&&FB-F+B|FC//"}
-remplacement = {"A":"[&FL!A]/////'[&FL!A]///////'[&FL!A]", "F":"S/////F", "S":"FL", "L":"[''∧∧o]"}
-'''
-angled=22.5
-pattern = "A"
-iteration = 5
-remplacement = {"A":"[&FL!A]/////'[&FL!A]///////'[&FL!A]", "F":"S///F", "S":"FL", "L":""}
-'''
-pattern computation
-'''
-res = derivation(pattern, remplacement, iteration)
-
-
-def draw(pattern, angled):
+def draw_pattern(pattern, angled):
     loc = [0, 0, 0]
     diameter = 0.1
     colorIndex = 0
@@ -94,15 +54,11 @@ def draw(pattern, angled):
         elif (i == "-"):
             M = np.dot(M, run)
         elif (i == "/"):
-           # print(M)
             M = np.dot(M, rhn)
-          #  print(M)
         elif (i == "\\"):
             M = np.dot(M, rh)
         elif (i == "&"):
-            print(M)
             M = np.dot(M, rl)
-            print(M)
         elif (i == "∧"):
             M = np.dot(M, rln)
         elif (i == "|"):
@@ -117,7 +73,3 @@ def draw(pattern, angled):
             M, loc, diameter = stack.pop()
         elif (i == "o"):
             bpy.ops.mesh.primitive_uv_sphere_add(size=0.1, location=loc)
-
-draw(res, angled)
-
-
