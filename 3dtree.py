@@ -20,7 +20,7 @@ pattern initialisation
 angled=22.5
 pattern = "A"
 iteration = 4
-remplacement = {"A":"[&FL!A]/////'[&FL!A]///////'[&FL!A]", "F":"S///F", "S":"FL", "L":""}
+remplacement = {"A":"[&FL!A]<<<<<'[&FL!A]<<<<<<<'[&FL!A]", "F":"S<<<<<F", "S":"FL", "L":""}
 '''
 pattern computation
 '''
@@ -53,13 +53,13 @@ def draw(pattern, angled):
             M = np.dot(M, ru)
         elif (i == "-"):
             M = np.dot(M, run)
-        elif (i == "/"):
+        elif (i == "<"):
             M = np.dot(M, rhn)
-        elif (i == "\\"):
+        elif (i == ">"):
             M = np.dot(M, rh)
         elif (i == "&"):
             M = np.dot(M, rl)
-        elif (i == "∧"):
+        elif (i == "^"):
             M = np.dot(M, rln)
         elif (i == "|"):
             M = np.dot(M, ru180)
