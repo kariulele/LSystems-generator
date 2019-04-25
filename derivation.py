@@ -8,6 +8,14 @@ Created on Mon Apr 22 19:30:37 2019
 
 import random
 
+def derivation_replacement(pattern, rempl, iteration):
+    res = derivation(pattern, rempl, iteration)
+    re = list(res)
+    for i in range(len(re)):
+        if(re[i] in rempl):
+            re[i] = "F"
+    return ''.join(re)
+
 def derivation(pattern, rempl, iteration):
     res = pattern
     for k in range(iteration):

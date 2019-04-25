@@ -7,18 +7,18 @@ This is a temporary script file.
 
 import turtle as tl
 
-def draw_turtle(tree, angle, color):
+def draw_turtle(tree, angle, color=[], posx=0, posy=-350, size=8):
     stack = []
     tl.up()
     tl.left(90)
-    tl.setpos(0, -350)
+    tl.setpos(posx, posy)
     tl.down()
     tl.pensize(2)
     j = -1
     for i in tree:
         j += 1
         if (i == "F"):
-            tl.forward(8);
+            tl.forward(size);
         elif (i == "+"):
             tl.left(angle)
         elif (i == "-"):
