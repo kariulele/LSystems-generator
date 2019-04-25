@@ -7,13 +7,13 @@ This is a temporary script file.
 
 import turtle as tl
 
-def draw_turtle(tree, angle, color=[], posx=0, posy=-350, size=8):
+def draw_turtle(tree, angle, color=[], posx=0, posy=-350, size=8, pen=2):
     stack = []
     tl.up()
     tl.left(90)
     tl.setpos(posx, posy)
     tl.down()
-    tl.pensize(2)
+    tl.pensize(pen)
     j = -1
     for i in tree:
         j += 1
