@@ -11,6 +11,7 @@ import numpy as np
 from draw import draw_pattern, draw_cylinder
 from matrix_rotation import RU, RL, RH
 from derivation import derivation
+from draw3dleaf import draw_leaf
 
 
 '''
@@ -18,16 +19,21 @@ pattern initialisation
 '''
 
 angled=22.5
-pattern = "FA"
-iteration = 5
-remplacement = {"A":"![B]<<<<[B]<<<<[B]<<<<B", "B":"&FFAJ"}
+pattern = "^FA"
+iteration = 7
+remplacement = {"A":"!![LB]<<<<[LB]<<<<[LB]<<<<B", "B":"&LFLFA"}
 '''
 pattern computation
 '''
 res = derivation(pattern, remplacement, iteration)
 
 def draw(pattern, angled):
-    loc = [0, 0, 0]
+    if (not("BRN" in bpy.data.materials)):
+        mat = bpy.data.materials.new("BRN")
+        mat.diffuse_color = (0.6,0.44,0.16)
+    else:
+        mat = bpy.data.materials["BRN"]
+    loc = [1, 1, 0]
     diameter = 0.1
     colorIndex = 0
     H = [0, 0, 1]
@@ -47,7 +53,7 @@ def draw(pattern, angled):
         if (i == "F"):
             D = M[0]
             newloc = np.add(loc, D)
-            draw_cylinder(loc, newloc, diameter)
+            draw_cylinder(loc, newloc, diameter, mat)
             loc = newloc
         elif (i == "+"):
             M = np.dot(M, ru)
@@ -71,56 +77,8 @@ def draw(pattern, angled):
             stack.append((M, loc, diameter))
         elif (i == "]"):
             M, loc, diameter = stack.pop()
-        elif (i == "o"):
-            bpy.ops.mesh.primitive_uv_sphere_add(size=0.1, location=loc)
+        elif (i == "L"):
+            draw_leaf(loc)
 
-def drawdec(pattern, angled):
-    loc = [0, 0, 0]
-    diameter = 0.1
-    colorIndex = 0
-    H = [1, 1, 2]
-    L = [2, 1, 1]
-    U = [1, 2, 1]
-    M = [H, L, U]
-    angle = math.radians(angled)
-    rh = RU(angle)
-    rl = RH(angle)
-    ru = RL(angle)
-    rhn = RU(-angle)
-    rln = RH(-angle)
-    run = RL(-angle)
-    ru180 = RU(math.radians(180))
-    stack = []
-    for i in pattern:
-        if (i == "F"):
-            D = M[0]
-            newloc = np.add(loc, D)
-            draw_cylinder(loc, newloc, diameter)
-            loc = newloc
-        elif (i == "+"):
-            M = np.dot(M, ru)
-        elif (i == "-"):
-            M = np.dot(M, run)
-        elif (i == "<"):
-            M = np.dot(M, rhn)
-        elif (i == ">"):
-            M = np.dot(M, rh)
-        elif (i == "&"):
-            M = np.dot(M, rl)
-        elif (i == "^"):
-            M = np.dot(M, rln)
-        elif (i == "|"):
-            M = np.dot(M, ru180)
-        elif (i == "!"):
-            diameter -= 0.01
-        elif (i == "'"):
-            colorIndex += 1
-        elif (i == "["):
-            stack.append((M, loc, diameter))
-        elif (i == "]"):
-            M, loc, diameter = stack.pop()
-        elif (i == "o"):
-            bpy.ops.mesh.primitive_uv_sphere_add(size=0.1, location=loc)
-
-drawdec(res, angled)
+draw(res, angled)
 

@@ -10,7 +10,7 @@ import math
 import bpy
 from matrix_rotation import RH, RU, RL
 
-def draw_cylinder(fr, to, r):
+def draw_cylinder(fr, to, r, color):
     dx = to[0] - fr[0]
     dy = to[1] - fr[1]
     dz = to[2] - fr[2]    
@@ -25,6 +25,9 @@ def draw_cylinder(fr, to, r):
     theta = math.acos(dz/dist) 
     bpy.context.object.rotation_euler[1] = theta 
     bpy.context.object.rotation_euler[2] = phi
+    if (color is not None):
+        o = bpy.context.selected_objects[0] 
+        o.active_material = color
 
 def draw_pattern(pattern, angled):
     loc = [0, 0, 0]
