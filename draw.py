@@ -53,13 +53,13 @@ def draw_pattern(pattern, angled):
             M = np.dot(M, ru)
         elif (i == "-"):
             M = np.dot(M, run)
-        elif (i == "/"):
+        elif (i == "/" or i == "<"):
             M = np.dot(M, rhn)
-        elif (i == "\\"):
+        elif (i == "\\" or i == ">"):
             M = np.dot(M, rh)
         elif (i == "&"):
             M = np.dot(M, rl)
-        elif (i == "∧"):
+        elif (i == "∧" or i == "^"):
             M = np.dot(M, rln)
         elif (i == "|"):
             M = np.dot(M, ru180)
