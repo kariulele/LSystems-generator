@@ -11,7 +11,7 @@ import numpy as np
 from draw import draw_pattern, draw_cylinder
 from matrix_rotation import RU, RL, RH
 from derivation import derivation
-from draw3dleaf import draw_leaf
+from draw3dleaf import draw_leaf, draw_flower
 
 
 '''
@@ -21,7 +21,7 @@ pattern initialisation
 angled=22.5
 pattern = "^FA"
 iteration = 7
-remplacement = {"A":"!![LB]<<<<[LB]<<<<[LB]<<<<B", "B":"&LFLFA"}
+remplacement = {"A":"!![LLLBf]<<<<[LLLB]<<<<[LLLBf]<<<<B", "B":"&LLLFLLLFA"}
 '''
 pattern computation
 '''
@@ -33,7 +33,7 @@ def draw(pattern, angled):
         mat.diffuse_color = (0.6,0.44,0.16)
     else:
         mat = bpy.data.materials["BRN"]
-    loc = [1, 1, 0]
+    loc = [0, 0, 0]
     diameter = 0.1
     colorIndex = 0
     H = [0, 0, 1]
@@ -79,6 +79,8 @@ def draw(pattern, angled):
             M, loc, diameter = stack.pop()
         elif (i == "L"):
             draw_leaf(loc)
+        elif (i == "f"):
+            draw_flower(loc, 3)
 
 draw(res, angled)
 
