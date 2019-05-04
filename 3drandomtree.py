@@ -59,7 +59,7 @@ remplacement3 = {"A" : {0.33 : "!![LLLBf]<<<<[LLLB]<<<<[LLLBf]<<<<B",
                        0.66 : "[&FL!A]<<<<<'[&FL!A]<<<<<<<'[&FL!A]",
                        1 : "!![LB]<<<<[LB]<<<<[LB]<<<<B"},
                 "B" : {0.5 : "&LLLFLLLFA",
-                       0.5 : "&LFLFA"}}
+                       1 : "&LFLFA"}}
 '''
 pattern computation
 '''
@@ -74,13 +74,14 @@ remplacement = {""}
 '''
 pattern computation
 '''
-res = np.array([derivation(pattern0, remplacement0, iteration0),
-                derivation(pattern1, remplacement1, iteration1),
-                derivation(pattern2, remplacement2, iteration2),
-                stock_derivation(pattern3, remplacement3, iteration3)])
+dico = {0 : [derivation(pattern0, remplacement0, iteration0), angled0, 0.2, 0.5],
+        1 : [derivation(pattern1, remplacement1, iteration1), angled1, 0.2, 0.5],
+        2 : [derivation(pattern2, remplacement2, iteration2), angled2, 0.2, 0.5],
+        3 : [stock_derivation(pattern3, remplacement3, iteration3), angled3, 0.2, 0.5]}
+
 loc = [0, 0, 0]
 
-def draw_random(pattern, angled, loc, randomdist, randomangle):
+def draw_gauss(pattern, angled, loc, randomdist, randomangle):
     if (not("BRN" in bpy.data.materials)):
         mat = bpy.data.materials.new("BRN")
         mat.diffuse_color = (0.6,0.44,0.16)
@@ -128,4 +129,10 @@ def draw_random(pattern, angled, loc, randomdist, randomangle):
         elif (i == "f"):
             draw_flower(loc, 3)
 
-draw_random(res[3], angled3, loc, 0.2, 0.5)
+def draw_random(dico, loc):
+    n = random.randint(0, len(dico) - 1)
+    res = dico[n]
+    draw_gauss(res[0], res[1], loc, res[2], res[3])
+
+#draw_gauss(res[3], angled3, loc, 0.2, 0.5)
+draw_random(dico, loc)
