@@ -12,7 +12,7 @@ import bpy
 import numpy as np
 from draw import draw_cylinder
 from matrix_rotation import RU, RL, RH
-from derivation import derivation
+from derivation import derivation, stock_derivation
 from draw3dleaf import draw_leaf, draw_flower
 
 '''
@@ -37,19 +37,47 @@ remplacement1 = {"A":"[&FL!A]<<<<<'[&FL!A]<<<<<<<'[&FL!A]", "F":"S<<<<<F", "S":"
 pattern computation
 '''
 
+
 '''
 pattern initialisation
 '''
 angled2=22.5
-pattern2 = "A"
-iteration2 = 5
-remplacement2 = {""}
+pattern2 = "^FA"
+iteration2 = 7
+remplacement2 = {"A":"!![LLLBf]<<<<[LLLB]<<<<[LLLBf]<<<<B", "B":"&LLLFLLLFA"}
+'''
+pattern computation
+'''
+
+'''
+pattern initialisation
+'''
+angled3=22.5
+pattern3 = "^FA"
+iteration3 = 7
+remplacement3 = {"A" : {0.33 : "!![LLLBf]<<<<[LLLB]<<<<[LLLBf]<<<<B",
+                       0.66 : "[&FL!A]<<<<<'[&FL!A]<<<<<<<'[&FL!A]",
+                       1 : "!![LB]<<<<[LB]<<<<[LB]<<<<B"},
+                "B" : {0.5 : "&LLLFLLLFA",
+                       0.5 : "&LFLFA"}}
+'''
+pattern computation
+'''
+
+'''
+pattern initialisation
+'''
+angled=22.5
+pattern = "A"
+iteration = 5
+remplacement = {""}
 '''
 pattern computation
 '''
 res = np.array([derivation(pattern0, remplacement0, iteration0),
                 derivation(pattern1, remplacement1, iteration1),
-                derivation(pattern2, remplacement2, iteration2)])
+                derivation(pattern2, remplacement2, iteration2),
+                stock_derivation(pattern3, remplacement3, iteration3)])
 loc = [0, 0, 0]
 
 def draw_random(pattern, angled, loc, randomdist, randomangle):
@@ -100,4 +128,4 @@ def draw_random(pattern, angled, loc, randomdist, randomangle):
         elif (i == "f"):
             draw_flower(loc, 3)
 
-draw_random(res[0], angled0, loc, 0.2, 0.5)
+draw_random(res[3], angled3, loc, 0.2, 0.5)
