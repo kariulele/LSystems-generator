@@ -8,11 +8,10 @@ Created on Mon Apr 22 19:30:37 2019
 import math
 import bpy
 import numpy as np
-from draw import draw_pattern, draw_cylinder
+from draw import draw_cylinder
 from matrix_rotation import RU, RL, RH
 from derivation import derivation
 from draw3dleaf import draw_leaf, draw_flower
-
 
 '''
 pattern initialisation
