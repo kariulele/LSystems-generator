@@ -19,13 +19,12 @@ pattern initialisation
 '''
 
 angled=22.5
-pattern = "^FA"
+pattern = "F[^FA][&FC]"
 iteration = 7
-remplacement = {"A":"!![LLLBf]<<<<[LLLB]<<<<[LLLBf]<<<<B", "B":"&LLLFLLLFA"}
+remplacement = {"A":"!!![LLLBf]<<<<[LLLB]<<<<[LLLBf]<<<<B", "B":"^LLLFLLLFA", "C" : "!!![LLLDf]>>>>[LLLD]>>>>[LLLDf]>>>>D", "D" : "&LLLFLLLFC"}
 '''
 pattern computation
 '''
 res = derivation(pattern, remplacement, iteration)
 
 draw_straight(res, angled, 0)
-
