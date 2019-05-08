@@ -13,7 +13,6 @@ from matrix_rotation import RU, RL, RH
 from derivation import derivation
 from draw3dleaf import draw_leaf, draw_flower
 
-
 '''
 pattern initialisation
 '''

@@ -8,6 +8,16 @@ Created on Mon Apr 22 19:30:37 2019
 
 import random
 
+def iteration_random(n, gauss):
+    x = random.gauss(n, gauss)
+    if x <= n - 2:
+        x = n - 2
+    elif x >= n + 2:
+        x = n + 2
+    else:
+        x = round(x)
+    return x
+
 def derivation_replacement(pattern, rempl, iteration):
     res = derivation(pattern, rempl, iteration)
     re = list(res)
