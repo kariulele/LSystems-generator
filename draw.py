@@ -9,7 +9,7 @@ import numpy as np
 import math
 import bpy
 from matrix_rotation import RH, RU, RL
-from draw3dleaf import *
+from draw3dleaf import draw_leaf, draw_flower
 
 def draw_straight(pattern, angled, color = 0):
     if (not("BRN" in bpy.data.materials)):
@@ -65,6 +65,8 @@ def draw_straight(pattern, angled, color = 0):
             draw_leaf(loc)
         elif (i == "f"):
             draw_flower(loc, color)
+        elif (i == "p"):
+            draw_apple(loc)
 
 def draw_cylinder(fr, to, r, color):
     dx = to[0] - fr[0]
@@ -132,3 +134,18 @@ def draw_pattern(pattern, angled):
             M, loc, diameter = stack.pop()
         elif (i == "o"):
             bpy.ops.mesh.primitive_uv_sphere_add(size=0.1, location=loc)
+
+def draw_apple(location):
+    if (not("brow" in bpy.data.materials)):
+        mat = bpy.data.materials.new("brow")
+        mat.diffuse_color = (0.55,0.27,0.074)
+        red = bpy.data.materials.new("red")
+        red.diffuse_color = (1,0,0)
+    else:
+        mat = bpy.data.materials["brow"]
+        red = bpy.data.materials["red"]
+    draw_cylinder(location, (location[0], location[1], location[2] - 0.15), 0.02, mat)
+    loc = (location[0], location[1], location[2] - 0.2)
+    bpy.ops.mesh.primitive_uv_sphere_add(size=0.12, location=loc)
+    o = bpy.context.selected_objects[0] 
+    o.active_material = red

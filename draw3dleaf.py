@@ -1,22 +1,6 @@
 import bpy
 import random
 import bmesh
-from draw import draw_cylinder
-
-def draw_apple(location):
-    if (not("brow" in bpy.data.materials)):
-        mat = bpy.data.materials.new("brow")
-        mat.diffuse_color = (0.55,0.27,0.074)
-        red = bpy.data.materials.new("red")
-        red.diffuse_color = (1,0,0)
-    else:
-        mat = bpy.data.materials["brow"]
-        red = bpy.data.materials["red"]
-    draw_cylinder(location, (location[0], location[1], location[2] - 0.15), 0.03, mat)
-    loc = (location[0], location[1], location[2] - 0.3)
-    bpy.ops.mesh.primitive_uv_sphere_add(size=0.2, location=loc)
-    o = bpy.context.selected_objects[0] 
-    o.active_material = red
 
 def draw_leaf(location):
     color = random.randint(0,3)
