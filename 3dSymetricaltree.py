@@ -27,4 +27,4 @@ pattern computation
 '''
 res = derivation(pattern, remplacement, iteration)
 
-draw_straight(res, angled, 0)
+draw_straight(res, angled)
