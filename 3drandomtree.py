@@ -20,7 +20,7 @@ pattern initialisation
 '''
 angled0=22.5
 pattern0 = "^FA"
-iteration0 = 5
+iteration0 = 6
 remplacement0 = {"A":"!![LB]<<<<[LB]<<<<[LB]<<<<B", "B":"&LFLFA"}
 
 
@@ -29,7 +29,7 @@ pattern initialisation
 '''
 angled1=22.5
 pattern1 = "A"
-iteration1 = 3
+iteration1 = 4
 remplacement1 = {"A":"[&FL!A]<<<<<'[&FL!A]<<<<<<<'[&FL!A]", "F":"S<<<<<F", "S":"FL", "L":""}
 
 
@@ -47,7 +47,7 @@ pattern initialisation
 '''
 angled3=22.5
 pattern3 = "^FA"
-iteration3 = 5
+iteration3 = 6
 remplacement3 = {"A" : {0.33 : "!![LLLBf]<<<<[LLLB]<<<<[LLLBf]<<<<B",
                        0.66 : "[&FL!A]<<<<<'[&FL!A]<<<<<<<'[&FL!A]",
                        1 : "!![LB]<<<<[LB]<<<<[LB]<<<<B"},
