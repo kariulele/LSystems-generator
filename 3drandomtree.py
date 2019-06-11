@@ -74,12 +74,12 @@ remplacement5 = {"A":"!!![LLLBf]<<<<[LLLB]<<<<[LLLBf]<<<<B", "B":"^LLLFLLLFpA", 
 
 
 # pattern, remplacement, nbiterationm=, gauss_nb_iteration, stocastic?, angle, gauss_len, gauss_angle
-dico = {0 : [pattern0, remplacement0, iteration0, 1.5, 0, angled0, 0.2, 0.5],
-        1 : [pattern1, remplacement1, iteration1, 1.5, 0, angled1, 0.2, 0.5],
-        2 : [pattern2, remplacement2, iteration2, 1.5, 0, angled2, 0.2, 0.5],
-        3 : [pattern3, remplacement3, iteration3, 1.5, 1, angled3, 0.2, 0.5],
-        4 : [pattern4, remplacement4, iteration4, 1.5, 0, angled4, 0.2, 0,5],
-        5 : [pattern5, remplacement5, iteration5, 1.5, 0, angled5, 0.2, 0,5]}
+dico = {0 : [pattern0, remplacement0, iteration0, 1.5, 0, angled0, 0.2, 0.05],
+        1 : [pattern1, remplacement1, iteration1, 1.5, 0, angled1, 0.2, 0.05],
+        2 : [pattern2, remplacement2, iteration2, 1.5, 0, angled2, 0.2, 0.05],
+        3 : [pattern3, remplacement3, iteration3, 1.5, 1, angled3, 0.2, 0.05],
+        4 : [pattern4, remplacement4, iteration4, 1.5, 0, angled4, 0.2, 0.05],
+        5 : [pattern5, remplacement5, iteration5, 1.5, 0, angled5, 0.2, 0.05]}
 
 def draw_gauss(pattern, angled, loc, randomdist, randomangle):
     if (not("BRN" in bpy.data.materials)):
@@ -97,6 +97,7 @@ def draw_gauss(pattern, angled, loc, randomdist, randomangle):
     ru180 = RL(math.radians(180))
     stack = []
     for i in pattern:
+        angleg = angle + random.gauss(0, randomangle)
         if (i == "F"):
             g = random.gauss(0, randomdist)
             D = [M[0][0] + g, M[0][1] + g, M[0][2] + g]
@@ -104,17 +105,17 @@ def draw_gauss(pattern, angled, loc, randomdist, randomangle):
             draw_cylinder(loc, newloc, diameter, mat)
             loc = newloc
         elif (i == "+"):
-            M = np.dot(M, RL(angle * random.gauss(0, randomangle)))
+            M = np.dot(M, RL(angleg))
         elif (i == "-"):
-            M = np.dot(M, RL(-angle * random.gauss(0, randomangle)))
+            M = np.dot(M, RL(-angleg))
         elif (i == "<"):
-            M = np.dot(M, RU(-angle * random.gauss(0, randomangle)))
+            M = np.dot(M, RU(-angleg))
         elif (i == ">"):
-            M = np.dot(M, RU(angle * random.gauss(0, randomangle)))
+            M = np.dot(M, RU(angleg))
         elif (i == "&"):
-            M = np.dot(M, RH(angle * random.gauss(0, randomangle)))
+            M = np.dot(M, RH(angleg))
         elif (i == "^"):
-            M = np.dot(M, RH(-angle * random.gauss(0, randomangle)))
+            M = np.dot(M, RH(-angleg))
         elif (i == "|"):
             M = np.dot(M, ru180)
         elif (i == "!"):
@@ -195,7 +196,7 @@ def draw_unique_forest(dico, n, tree_number=-1):
         n = n - 1
 
 #pour dessiner un seul abre
-draw_gauss(derivation(pattern4, remplacement4, 5), angled4, [0,0,0], 0.2, 0.5)
+draw_gauss(derivation(pattern4, remplacement4, 5), angled4, [0,0,0], 0.2, 0.05)
 #pour dessiner un arbre random dans le dico
 #draw_random(dico, [0,0,0])
 #pour dessiner une foret d'une espece (l'espece est son numero dans le dico)
