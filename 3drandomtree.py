@@ -38,7 +38,7 @@ pattern initialisation
 '''
 angled2=22.5
 pattern2 = "^FA"
-iteration2 = 6
+iteration2 = 5
 remplacement2 = {"A":"!![LLLBf]<<<<[LLLB]<<<<[LLLBf]<<<<B", "B":"&LLLFLLLFA"}
 
 
@@ -47,7 +47,7 @@ pattern initialisation
 '''
 angled3=22.5
 pattern3 = "^FA"
-iteration3 = 6
+iteration3 = 5
 remplacement3 = {"A" : {0.33 : "!![LLLBf]<<<<[LLLB]<<<<[LLLBf]<<<<B",
                        0.66 : "[&FL!A]<<<<<'[&FL!A]<<<<<<<'[&FL!A]",
                        1 : "!![LB]<<<<[LB]<<<<[LB]<<<<B"},
@@ -60,7 +60,7 @@ pattern initialisation
 '''
 angled4=22.5
 pattern4 = "F[^FA][&FC]"
-iteration4 = 6
+iteration4 = 5
 remplacement4 = {"A":"!!![LLLBf]<<<<[LLLB]<<<<[LLLBf]<<<<B", "B":"^LLLFLLLFpA", "C" : "!!![LLLDf]>>>>[LLLD]>>>>[LLLDf]>>>>D", "D" : "&LLLFLLLFpC"}
 
 
@@ -69,7 +69,7 @@ pattern initialisation
 '''
 angled5=22.5
 pattern5 = "F[^FA][&FC]"
-iteration5 = 6
+iteration5 = 5
 remplacement5 = {"A":"!!![LLLBf]<<<<[LLLB]<<<<[LLLBf]<<<<B", "B":"^LLLFLLLFpA", "C" : "!!![LLLDf]>>>>[LLLD]>>>>[LLLDf]>>>>D", "D" : "&LLLFLLLFpC"}
 
 
@@ -168,11 +168,23 @@ def draw_unique_forest(dico, n, tree_number=-1):
     if (n < 1 or n > 25):
         return
 
+    if (tree_number==-1):
+        tree_number = random.randint(0, len(dico) - 1)
+    res = dico[tree_number]
+
+
     forest = np.zeros([5, 5])
     loc = [0, 0, 0]
-    draw_random(dico, loc)
+
+    iteration = iteration_random(res[2], res[3])
+    if res[4]:
+        deriv = stock_derivation(res[0], res[1], iteration)
+    else:
+        deriv = derivation(res[0], res[1], iteration)
+    draw_gauss(deriv, res[5], loc, res[6], res[7])
     forest[2][2] = 1
     n = n - 1
+    
     while n > 0:
         while True:
             x = random.randint(0, 4)
@@ -181,10 +193,6 @@ def draw_unique_forest(dico, n, tree_number=-1):
                 forest[x][y] = 1
                 break
         loc = [(-2 + x) * 2, (-2 + y) * 2, 0]
-
-        if (tree_number==-1):
-            tree_number = random.randint(0, len(dico) - 1)
-        res = dico[tree_number]
 
         iteration = iteration_random(res[2], res[3])
         if res[4]:
